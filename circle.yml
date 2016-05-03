@@ -8,6 +8,10 @@ dependencies:
     - docker info
     - docker build -t masakura/prototype1 .
 
+test:
+  ovierride:
+    - echo no test
+
 deployment:
   hub:
     branch: master

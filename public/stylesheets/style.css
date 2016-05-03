@@ -1,8 +1,9 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+.jumbotron h1, .jumbotron p {
+  text-align: center;
 }
 
-a {
-  color: #00B7FF;
+.jumbotron {
+  padding-top: 5rem;
+  color: #02EFC7;
+  background: center url(../images/image.jpg);
 }

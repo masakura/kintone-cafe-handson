@@ -4,6 +4,8 @@ machine:
 
 dependencies:
   override:
+    - docker version
+    - docker info
     - docker build -t masakura/app .
 
 deployment:

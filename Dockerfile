@@ -22,4 +22,4 @@ RUN . ${NVM_DIR}/nvm.sh && cd ${APP_HOME} && npm install --no-progress
 
 # Run App
 EXPOSE 3000/tcp
-ENTRYPOINT ["/usr/local/app/run.sh"]
+ENTRYPOINT ["/usr/local/app/bin/run.sh"]

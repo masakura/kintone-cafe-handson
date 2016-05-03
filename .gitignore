@@ -1,0 +1,9 @@
+# Node.js
+node_modules/
+
+# WebStorm
+.idea/jsLibraryMappings.xml
+.idea/runConfigurations/
+.idea/vcs.xml
+.idea/workspace.xml
+

@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM ubuntu:14.04
 MAINTAINER Your Name <any@example.com>
 
 ENV APP_HOME /usr/local/app

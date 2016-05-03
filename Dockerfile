@@ -12,7 +12,7 @@ RUN . ${NVM_DIR}/nvm.sh && nvm install stable
 
 # Setup App
 RUN mkdir -p ${APP_HOME}
-ADD package.json ${APP_HOME}
+ADD package.json ${APP_HOME}/package.json
 ADD app.js ${APP_HOME}
 ADD bin ${APP_HOME}/bin
 ADD public ${APP_HOME}/public

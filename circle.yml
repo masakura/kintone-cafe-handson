@@ -9,7 +9,7 @@ dependencies:
     - docker build -t masakura/prototype1 .
 
 test:
-  ovierride:
+  override:
     - echo no test
 
 deployment:

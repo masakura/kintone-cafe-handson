@@ -12,6 +12,7 @@ ADD package.json package.json
 RUN . ${NVM_DIR}/nvm.sh && npm install --no-progress && rm -rf /root/.npm
 ADD app.js app.js
 ADD bin bin
+ADD libs libs
 ADD public public
 ADD routes routes
 ADD views views

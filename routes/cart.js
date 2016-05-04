@@ -40,5 +40,10 @@ router.post('/add', (req, res) => {
 
   res.redirect('/cart');
 });
+router.post('/clear', (req, res) => {
+  req.session.cart = {items: {}};
+
+  res.redirect('/cart');
+});
 
 module.exports = router;

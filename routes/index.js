@@ -1,6 +1,5 @@
 const express = require('express');
-const Client = require('node-rest-client').Client;
-const client = new Client();
+const fetch = require('node-fetch');
 const router = express.Router();
 
 const kintoneApp = {
@@ -12,10 +11,14 @@ const kintoneApp = {
 /* GET home page. */
 router.get('/', (req, res) => {
 
-  client.get(`${kintoneApp.base}records.json?app=${kintoneApp.id}`, {
-    headers: { 'X-Cybozu-API-Token': kintoneApp.token }
-  }, (data) => {
-    const items = data.records
+  fetch(`${kintoneApp.base}records.json?app=${kintoneApp.id}`, {
+    headers: {
+      'X-Cybozu-API-Token': kintoneApp.token
+    }
+  })
+    .then(res => res.json())
+    .then(data => {
+      const items = data.records
         .map(row => ({
           id: row.レコード番号.value,
           code: row.code.value,
@@ -24,10 +27,10 @@ router.get('/', (req, res) => {
           imageUri: row.imageUri.value || '://placehold.it/640x340?text=no image',
           summary: row.summary.value
         }));
-    items.sort((a, b) => a.id - b.id);
+      items.sort((a, b) => a.id - b.id);
 
-    res.render('index', { title: 'たにやまショッピング', items});
-  });
+      res.render('index', { title: 'たにやまショッピング', items: items});
+    });
 });
 
 module.exports = router;

@@ -32,13 +32,15 @@
 
 <div class="container">
   <div class="row">
-    <% for (const pref of prefectures) { %>
+    <% for (const item of items) { %>
     <div class="col-xs-12 col-sm-6 col-md-4">
       <div class="card">
         <img src="http://placehold.it/640x340?text=no image" alt="" class="card-img-top img-fluid">
         <div class="card-block">
-          <h4 class="card-title"><%= pref.name %></h4>
-          <p class="card-text">ほげほげ</p>
+          <h4 class="card-title"><%= item.name %></h4>
+          <p class="card-text">
+            <%= item.summary %>
+          </p>
           <a href="#" class="btn btn-primary">
             <i class="fa fa-shopping-cart" aria-hidden="true"></i>
             カートに入れる

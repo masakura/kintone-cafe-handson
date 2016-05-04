@@ -12,18 +12,21 @@ const kintoneApp = {
 /* GET home page. */
 router.get('/', (req, res) => {
 
-  console.log(`${kintoneApp.base}records.json?app=${kintoneApp.id}`);
   client.get(`${kintoneApp.base}records.json?app=${kintoneApp.id}`, {
     headers: { 'X-Cybozu-API-Token': kintoneApp.token }
   }, (data) => {
-    const prefectures = data.records
+    const items = data.records
         .map(row => ({
-          code: row.Number.value,
-          name: row.Single_line_text.value
+          id: row.レコード番号.value,
+          code: row.code.value,
+          name: row.name.value,
+          price: row.price.value,
+          imageUri: row.imageUri.value || '://placehold.it/640x340?text=no image',
+          summary: row.summary.value
         }));
-    prefectures.sort((a, b) => a.code - b.code);
+    items.sort((a, b) => a.id - b.id);
 
-    res.render('index', { title: 'Express', prefectures});
+    res.render('index', { title: 'たにやまショッピング', items});
   });
 });
 

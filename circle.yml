@@ -7,6 +7,7 @@ dependencies:
     - docker version
     - docker info
     - docker build -t masakura/prototype1:`git rev-parse --short HEAD` .
+    - docker tag masakura/prototype1:`git rev-parse --short HEAD` masakura/prototype1
 
 test:
   override:
@@ -18,3 +19,4 @@ deployment:
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push masakura/prototype1:`git rev-parse --short HEAD`
+      - docker push masakura/prototype1:latest

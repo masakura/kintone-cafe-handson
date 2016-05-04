@@ -30,6 +30,27 @@ const itemsService = {
 
         return items;
       });
+  },
+
+  getItem(id) {
+    return fetch(`${kintoneApp.base}record.json?app=${kintoneApp.id}&id=${id}`, {
+      headers: {
+        'X-Cybozu-API-Token': kintoneApp.token
+      }
+    })
+      .then(res => res.json())
+      .then(data => this.convert(data.record));
+  },
+
+  convert(row) {
+    return {
+      id: row.レコード番号.value,
+      code: row.code.value,
+      name: row.name.value,
+      price: row.price.value,
+      imageUri: row.imageUri.value || '://placehold.it/640x340?text=no image',
+      summary: row.summary.value
+    }
   }
 };
 

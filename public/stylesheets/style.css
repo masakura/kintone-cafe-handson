@@ -3,9 +3,12 @@
 }
 
 .jumbotron {
-  padding-top: 5rem;
   color: #02EFC7;
   background: center url(../images/image.jpg);
+}
+
+.app-content {
+  padding-top: 5rem;
 }
 
 .app-item-price {

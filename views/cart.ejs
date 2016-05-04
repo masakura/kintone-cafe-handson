@@ -22,43 +22,33 @@
 </nav>
 
 <div class="app-content">
-  <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1>たにやまショッピング</h1>
-      <p>
-        オンラインショップングアプリの作成を通じて、kintone API の使い方や arukas の使い方を学びます。
-      </p>
-    </div>
-  </div>
-
   <div class="container">
-    <div class="row">
-      <% for (const item of items) { %>
-      <div class="col-xs-12 col-sm-6 col-md-4">
-        <div class="card">
-          <img src="http://placehold.it/640x340?text=no image" alt="" class="card-img-top img-fluid">
-          <div class="card-block">
-            <h4 class="card-title"><%= item.name %></h4>
-            <p class="card-text">
-              <%= item.summary %>
-            </p>
-            <div class="row">
-              <div class="col-xs-4">
-                <span class="app-item-price"><%= item.price %> 円</span>
-              </div>
-              <form action="/cart/add" method="post" class="col-xs-8">
-                <input type="hidden" name="id" value="<%= item.id %>">
-                <button type="submit" class="btn btn-primary">
-                  <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                  カートに入れる
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>商品コード</th>
+        <th>商品名</th>
+        <th>単価</th>
+        <th>数量</th>
+        <th>金額</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% for (const item of cart.items) { %>
+      <tr>
+        <td><%= item.code %></td>
+        <td><%= item.name %></td>
+        <td><%= item.price %></td>
+        <td><%= item.count %></td>
+        <td><%= item.total %></td>
+      </tr>
       <% } %>
-    </div>
+      </tbody>
+      <tfoot>
+      <th colspan="4">合計</th>
+      <td><%= cart.total %></td>
+      </tfoot>
+    </table>
   </div>
 </div>
 

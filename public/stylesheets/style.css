@@ -7,3 +7,8 @@
   color: #02EFC7;
   background: center url(../images/image.jpg);
 }
+
+.app-item-price {
+  color: #ee0000;
+  font-weight:bold;
+}

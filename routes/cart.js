@@ -1,6 +1,7 @@
 const express = require('express');
 const _ = require('underscore');
 const itemsService = require('../libs/itemsService');
+const ordersService = require('../libs/ordersService');
 const router = express.Router();
 
 function total(items) {
@@ -18,10 +19,9 @@ router.get('/', (req, res) => {
           code: info.code,
           name: info.name,
           price: info.price,
-          count: item.count,
-          total: info.price * item.count
+          number: String(item.number),
+          total: info.price * item.number
         })));
-
 
   Promise.all(promises)
     .then(values => ({
@@ -35,8 +35,8 @@ router.post('/add', (req, res) => {
 
   // Add item to cart
   const cart = req.session.cart = req.session.cart || {items: {}};
-  const item = cart.items[id] = cart.items[id] || {id: id, count: 0};
-  item.count++;
+  const item = cart.items[id] = cart.items[id] || {id: id, number: 0};
+  item.number++;
 
   res.redirect('/cart');
 });
@@ -45,5 +45,21 @@ router.post('/clear', (req, res) => {
 
   res.redirect('/cart');
 });
+
+router.get('/buy', (req, res) => {
+  res.render('cart-buy', {title: '送付先'});
+});
+router.post('/buy', (req, res) => {
+  const order = {
+    fullName: req.body.fullName,
+    prefecture: req.body.prefecture,
+    address: req.body.address,
+    items: _.values((req.session.cart || {items: {}}).items)
+  };
+
+  ordersService.addOrder(order)
+    .then(() => req.session.cart = {items: {}})
+    .then(() => res.render('cart-buy-finish', {title: '購入手続きが完了しました'}));
+})
 
 module.exports = router;

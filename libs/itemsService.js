@@ -1,4 +1,5 @@
 const fetch = require('node-fetch');
+const HttpsProxyAgent = require('https-proxy-agent');
 
 const kintoneApp = {
   // ex: https://7nkse.cybozu.com/k/v1/
@@ -7,10 +8,12 @@ const kintoneApp = {
   id: process.env['KINTONE_APP_ITEMS_ID'],
   token: process.env['KINTONE_APP_ITEMS_TOKEN']
 };
+const agent = process.env['https_proxy'] ? new HttpsProxyAgent(process.env['https_proxy']) : null;
 
 const itemsService = {
   getItems() {
     return fetch(`${kintoneApp.base}records.json?app=${kintoneApp.id}`, {
+      agent,
       headers: {
         'X-Cybozu-API-Token': kintoneApp.token
       }
@@ -34,6 +37,7 @@ const itemsService = {
 
   getItem(id) {
     return fetch(`${kintoneApp.base}record.json?app=${kintoneApp.id}&id=${id}`, {
+      agent,
       headers: {
         'X-Cybozu-API-Token': kintoneApp.token
       }

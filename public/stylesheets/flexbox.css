@@ -1,0 +1,13 @@
+.row {
+  flex-wrap: wrap;
+  display: flex;
+}
+
+.col-xs-12, .col-sm-6, .col-md-4 {
+  float: none;
+  display: flex;
+}
+
+.col-xs-12 .card, .col-sm-6 .card, .col-md-4 .card {
+  flex: 1;
+}

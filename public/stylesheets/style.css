@@ -1,3 +1,9 @@
+@import "flexbox.css";
+
+body {
+  min-width: 15rem;
+}
+
 .jumbotron h1, .jumbotron p {
   text-align: center;
 }
@@ -8,10 +14,29 @@
 }
 
 .app-content {
-  padding-top: 5rem;
+  padding-top: 3.5rem;
 }
 
 .app-item-price {
   color: #ee0000;
   font-weight:bold;
+}
+
+.app-item {
+  padding-bottom: 6rem;
+}
+
+.app-item-price-box {
+  width: 100%;
+  position: absolute;
+  height: 2rem;
+  bottom: 4.5rem;
+  text-align: right;
+}
+
+.app-item-buttons-box {
+  width: 100%;
+  position: absolute;
+  height: 4rem;
+  bottom: 0.5rem;
 }

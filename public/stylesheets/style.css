@@ -40,3 +40,8 @@ body {
   height: 4rem;
   bottom: 0.5rem;
 }
+
+.app-item .card-title {
+  color: #555555;
+  font-size: 130%;
+}

@@ -39,7 +39,7 @@ const ordersService = {
     return Promise.all(promises)
       .then(values => {
         const data = {
-          app: 25,
+          app: kintoneApp.id,
           record: {
             prefecture: {
               value: order.prefecture

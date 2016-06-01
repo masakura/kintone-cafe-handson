@@ -1,0 +1,4 @@
+### kintone って?
+* サイボウズのサービス
+* D&D で誰でも簡単に業務アプリを作ることができる
+* https://kintone.cybozu.com/jp/feature/

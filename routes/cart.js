@@ -9,8 +9,7 @@ router.get('/', (req, res) => {
   const cartService = new CartService(req);
 
   cartService.getCart()
-    .then(cart => res.render('cart', {title: 'cart', cart}))
-    .catch(console.log);
+    .then(cart => res.render('cart', {title: 'cart', cart}));
 });
 router.post('/add', (req, res) => {
   const cartService = new CartService(req);

@@ -1,3 +1,4 @@
+const debug = require('debug')('express-prottype:server');
 const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
 
@@ -20,7 +21,7 @@ class ItemsService {
     }
 
     const uri = `${kintoneApp.base}records.json?app=${kintoneApp.id}${params}`;
-    console.log(uri);
+    debug(uri);
 
     return fetch(uri, {
       agent,
@@ -28,14 +29,13 @@ class ItemsService {
         'X-Cybozu-API-Token': kintoneApp.token
       }
     })
+      // 戻り値を JSON からオブジェクトに変換。
       .then(res => res.json())
       .then(data => {
-        // レコードが一行もなかった場合はあらのコレクションを返す。
-        if (!data.records) {
-          return [];
-        }
+        const records = data.records || [];
 
-        const items = data.records
+        // 商品情報の形式を、kintone の形式から表示に適した形に変換する。
+        const items = records
           .map(row => ({
             id: row.レコード番号.value,
             code: row.code.value,
@@ -45,10 +45,10 @@ class ItemsService {
             summary: row.summary.value
           }));
         items.sort((a, b) => a.id - b.id);
-        console.log(items);
 
         return items;
-      });
+      })
+      .then(null, debug);
   }
 }
 

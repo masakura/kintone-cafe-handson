@@ -1,5 +1,6 @@
 'use strict';
 
+const debug = require('debug')('express-prottype:server');
 const ItemsService = require('../libs/itemsService');
 
 /**
@@ -54,7 +55,7 @@ class CartService {
      */
   constructor(req) {
     this._cart = req.session.cart = req.session.cart || {items: []};
-    this._itemsService = new ItemsService(req);
+    this._itemsService = new ItemsService(req)
   }
 
   /**
@@ -63,7 +64,8 @@ class CartService {
      */
   getCart() {
     return this.getItems()
-      .then(items => ({items, total: CartItem.calcTotal(items)}));
+      .then(items => ({items, total: CartItem.calcTotal(items)}))
+      .then(null, debug);
   }
 
   /**
@@ -72,10 +74,10 @@ class CartService {
      */
   getItems() {
     const items = this._cart.items;
-    console.log(items);
 
     return this._itemsService.getItems(items.map(item => item.id))
-      .then(items => items.map(item => new CartItem(item, this.findRawItem(item.id).number)));
+      .then(items => items.map(item => new CartItem(item, this.findRawItem(item.id).number)))
+      .then(null, debug);
   }
 
   /**

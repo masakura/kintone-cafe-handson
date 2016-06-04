@@ -1,3 +1,4 @@
+const debug = require('debug')('express-prottype:server');
 const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
 const CartService = require('./cartService')
@@ -53,20 +54,27 @@ class OrdersService {
           }
         }
       }))
-      .then(record => {console.log(JSON.stringify(record)); return record;})
       // kintone API で登録する
-      .then(record => fetch(`${kintoneApp.base}record.json`, {
-        method: 'POST',
-        body: JSON.stringify(record),
-        agent,
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Cybozu-API-Token': kintoneApp.token
-        }
-      }))
+      .then(record => {
+        const uri = `${kintoneApp.base}record.json`;
+        const json = JSON.stringify(record);
+
+        debug(`POST ${uri}`);
+        debug(json);
+
+        return fetch(uri, {
+          method: 'POST',
+          body: json,
+          agent,
+          headers: {
+            'Content-Type': 'application/json',
+            'X-Cybozu-API-Token': kintoneApp.token
+          }
+        })
+      })
       // 戻り値を JSON に変換
       .then(res => res.json())
-      .catch(console.log);
+      .then(null, debug);
   }
 }
 

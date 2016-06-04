@@ -1,47 +1,29 @@
 const express = require('express');
 const _ = require('underscore');
-const itemsService = require('../libs/itemsService');
-const ordersService = require('../libs/ordersService');
+
+const CartService = require('../libs/cartService');
+const OrdersService = require('../libs/ordersService');
 const router = express.Router();
 
-function total(items) {
-  return items
-    .map(item => item.total)
-    .reduce((prev, current) => prev + current, 0);
-}
-
 router.get('/', (req, res) => {
-  const cart = req.session.cart = req.session.cart || {items: {}};
-  var promises = _.values(cart.items)
-    .map(item => itemsService.getItem(item.id)
-        .then(info => ({
-          id: info.id,
-          code: info.code,
-          name: info.name,
-          price: info.price,
-          number: String(item.number),
-          total: info.price * item.number
-        })));
+  const cartService = new CartService(req);
 
-  Promise.all(promises)
-    .then(values => ({
-      items: values,
-      total: total(values)
-    }))
-    .then(cart => res.render('cart', {title: 'カート', cart}));
+  cartService.getCart()
+    .then(cart => res.render('cart', {title: 'cart', cart}))
+    .catch(console.log);
 });
 router.post('/add', (req, res) => {
+  const cartService = new CartService(req);
   const id = req.body.id;
 
-  // Add item to cart
-  const cart = req.session.cart = req.session.cart || {items: {}};
-  const item = cart.items[id] = cart.items[id] || {id: id, number: 0};
-  item.number++;
+  cartService.addItem(id);
 
   res.redirect('/cart');
 });
 router.post('/clear', (req, res) => {
-  req.session.cart = {items: {}};
+  const cartService = new CartService(req);
+
+  cartService.clearAllItems();
 
   res.redirect('/cart');
 });
@@ -50,15 +32,17 @@ router.get('/buy', (req, res) => {
   res.render('cart-buy', {title: '送付先'});
 });
 router.post('/buy', (req, res) => {
+  const cartService = new CartService(req);
+  const ordersService = new OrdersService(req);
+
   const order = {
     fullName: req.body.fullName,
     prefecture: req.body.prefecture,
-    address: req.body.address,
-    items: _.values((req.session.cart || {items: {}}).items)
+    address: req.body.address
   };
 
   ordersService.addOrder(order)
-    .then(() => req.session.cart = {items: {}})
+    .then(() => cartService.clearAllItems())
     .then(() => res.render('cart-buy-finish', {title: '購入手続きが完了しました'}));
 })
 

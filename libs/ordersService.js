@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
-const itemsService = require('./itemsService');
+const CartService = require('./cartService')
 
 const kintoneApp = {
   // ex: https://7nkse.cybozu.com/k/v1/
@@ -11,62 +11,63 @@ const kintoneApp = {
 };
 const agent = process.env['https_proxy'] ? new HttpsProxyAgent(process.env['https_proxy']) : null;
 
-const ordersService = {
-  addOrder(order) {
-    console.log(order.items);
+class OrdersService {
+  constructor (req) {
+    this._cartService = new CartService(req);
+  }
 
-    return itemsService.getItems(order.items.map(item => item.id))
-      // 受注の注文一覧部分のデータを作成する
-      .then(items => items.map(info => ({
+  addOrder(order) {
+    return this._cartService.getCart()
+      // カートの商品を kintone のレコード形式に変換する
+      .then(cart => cart.items.map(item => ({
         value: {
           code: {
-            value: info.code
+            value: item.code
           },
           name: {
-            value: info.name
+            value: item.name
           },
           unitPrice: {
-            value: info.price
+            value: item.price
           },
           number: {
-            value: 1 // item.number
-          },
-        }})))
-      // 受注データを作成する
-      .then(values => ({
-          app: kintoneApp.id,
-          record: {
-            prefecture: {
-              value: order.prefecture
-            },
-            address: {
-              value: order.address
-            },
-            fullName: {
-              value: order.fullName
-            },
-            details: {
-              value: values
-            },
-          }}))
-      // kintone API で登録する
-      .then(data => fetch(`${kintoneApp.base}record.json`, {
-          method: 'POST',
-          body: JSON.stringify(data),
-          agent,
-          headers: {
-            'Content-Type': 'application/json',
-            'X-Cybozu-API-Token': kintoneApp.token
+            value: item.number
           }
-        }))
+        }
+      })))
+      // 住所・氏名をつけて kintone のレコード形式にする
+      .then(details => ({
+        app: kintoneApp.id,
+        record: {
+          prefecture: {
+            value: order.prefecture
+          },
+          address: {
+            value: order.address
+          },
+          fullName: {
+            value: order.fullName
+          },
+          details: {
+            value: details
+          }
+        }
+      }))
+      .then(record => {console.log(JSON.stringify(record)); return record;})
+      // kintone API で登録する
+      .then(record => fetch(`${kintoneApp.base}record.json`, {
+        method: 'POST',
+        body: JSON.stringify(record),
+        agent,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Cybozu-API-Token': kintoneApp.token
+        }
+      }))
       // 戻り値を JSON に変換
       .then(res => res.json())
-      .then(data => {
-        console.log(data);
-        return data;
-      })
       .catch(console.log);
   }
-};
+}
 
-module.exports = ordersService;
+module.exports = OrdersService;

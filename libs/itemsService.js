@@ -10,11 +10,11 @@ const kintoneApp = {
 };
 const agent = process.env['https_proxy'] ? new HttpsProxyAgent(process.env['https_proxy']) : null;
 
-const itemsService = {
+class ItemsService {
   getItems(ids) {
-    // レコード ID でフィルターを書ける
+    // レコード ID でフィルターをかける
     let params = '';
-    if (ids && ids.length) {
+    if (ids) {
       const query = encodeURIComponent(`$id in (${ids.join(',')})`);
       params += `&query=${query}`;
     }
@@ -30,6 +30,11 @@ const itemsService = {
     })
       .then(res => res.json())
       .then(data => {
+        // レコードが一行もなかった場合はあらのコレクションを返す。
+        if (!data.records) {
+          return [];
+        }
+
         const items = data.records
           .map(row => ({
             id: row.レコード番号.value,
@@ -44,29 +49,7 @@ const itemsService = {
 
         return items;
       });
-  },
-
-  getItem(id) {
-    return fetch(`${kintoneApp.base}record.json?app=${kintoneApp.id}&id=${id}`, {
-      agent,
-      headers: {
-        'X-Cybozu-API-Token': kintoneApp.token
-      }
-    })
-      .then(res => res.json())
-      .then(data => this.convert(data.record));
-  },
-
-  convert(row) {
-    return {
-      id: row.レコード番号.value,
-      code: row.code.value,
-      name: row.name.value,
-      price: row.price.value,
-      imageUri: row.imageUri.value || '://placehold.it/640x340?text=no image',
-      summary: row.summary.value
-    }
   }
-};
+}
 
-module.exports = itemsService;
+module.exports = ItemsService;

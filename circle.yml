@@ -2,21 +2,23 @@ machine:
   services:
     - docker
 
+# ビルド工程で Docker Image を作成する
+# masakura/shopping:761968e という名前で作成
+# `761968e` は git のリビジョン
 dependencies:
   override:
-    - docker version
-    - docker info
-    - docker build -t masakura/prototype1:`git rev-parse --short HEAD` .
-    - docker tag masakura/prototype1:`git rev-parse --short HEAD` masakura/prototype1
+    - docker build -t masakura/shopping:`git rev-parse --short HEAD` .
+#                     ~~~~~~~~ ここをあなたの Docker ID に書き換える
 
 test:
   override:
     - echo no test
 
+# デプロイ工程で Docker Hub に作成した Image を Push する
+# https://hub.docker.com/ で確認できる
 deployment:
   hub:
-    branch: master
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push masakura/prototype1:`git rev-parse --short HEAD`
-      - docker push masakura/prototype1:latest
+#                   ~~~~~~~~ ここをあなたの Docker ID に書き換える

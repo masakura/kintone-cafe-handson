@@ -1,3 +1,5 @@
+'use strict';
+
 const express = require('express');
 const path = require('path');
 const favicon = require('serve-favicon');
@@ -9,7 +11,6 @@ const uid = require('uid-safe');
 
 const routes = require('./routes/index');
 const cart = require('./routes/cart');
-const users = require('./routes/users');
 
 const app = express();
 
@@ -33,7 +34,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/cart', cart);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

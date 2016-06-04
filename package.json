@@ -17,7 +17,6 @@
     "node-fetch": "^1.5.1",
     "serve-favicon": "~2.3.0",
     "uid-safe": "^2.1.0",
-    "underscore": "^1.8.3",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {}

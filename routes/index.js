@@ -1,10 +1,12 @@
 const express = require('express');
-const itemsService = require('../libs/itemsService');
+const ItemsService = require('../libs/itemsService');
 const router = express.Router();
 
 /* GET home page. */
 router.get('/', (req, res) => {
-  const items = itemsService.getItems()
+  const itemsService = new ItemsService(req);
+
+  itemsService.getItems()
     .then(items => res.render('index', { title: 'たにやまショッピング', items}));
 });
 

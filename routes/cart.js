@@ -1,5 +1,4 @@
 const express = require('express');
-const _ = require('underscore');
 
 const CartService = require('../libs/cartService');
 const OrdersService = require('../libs/ordersService');

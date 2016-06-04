@@ -2,6 +2,9 @@ const debug = require('debug')('express-prottype:server');
 const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
 
+/**
+ * kintone API を呼び出すための情報。
+ */
 const kintoneApp = {
   // ex: https://7nkse.cybozu.com/k/v1/
   base: process.env['KINTONE_BASE'],
@@ -11,18 +14,29 @@ const kintoneApp = {
 };
 const agent = process.env['https_proxy'] ? new HttpsProxyAgent(process.env['https_proxy']) : null;
 
+/**
+ * kintone API を利用して商品情報を取得します。
+ */
 class ItemsService {
+  /**
+   * 商品情報を取得します。
+   * @param ids 取得する商品のレコード ID のコレックション。(全て取得するときは省略)
+   * @returns {Promise.<Array.<{id: *, code: *, name: *, price: *, imageUri: *, summary: *}>>} 商品情報。
+     */
   getItems(ids) {
-    // レコード ID でフィルターをかける
+    // レコード ID が指定されていた場合は、そのレコード ID のみ取得する。
     let params = '';
     if (ids) {
       const query = encodeURIComponent(`$id in (${ids.join(',')})`);
       params += `&query=${query}`;
     }
 
+    // kintone API の URL を作る。
+    // https://cybozudev.zendesk.com/hc/ja/articles/202331474-%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E5%8F%96%E5%BE%97-GET-#step2
     const uri = `${kintoneApp.base}records.json?app=${kintoneApp.id}${params}`;
     debug(uri);
 
+    // kintone API を呼び出す。
     return fetch(uri, {
       agent,
       headers: {
@@ -34,7 +48,7 @@ class ItemsService {
       .then(data => {
         const records = data.records || [];
 
-        // 商品情報の形式を、kintone の形式から表示に適した形に変換する。
+        // 商品情報の形式を、kintone の形式から表示に適した形式に変換する。
         const items = records
           .map(row => ({
             id: row.レコード番号.value,

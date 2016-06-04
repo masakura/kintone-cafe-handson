@@ -51,7 +51,7 @@ class CartItem {
 class CartService {
   /**
    * カートサービスを初期化します。
-   * @param session カート情報を格納するセッション。
+   * @param req {*}カート情報を格納するセッション。
      */
   constructor(req) {
     this._cart = req.session.cart = req.session.cart || {items: []};
@@ -60,7 +60,7 @@ class CartService {
 
   /**
    * カート情報を取得します。
-   * @returns {Promise.<{items: *, total: *}>} カートの全商品と合計金額。
+   * @returns {Promise.<{items: Array.<CartItem>, total: number}>} カートの全商品と合計金額。
      */
   getCart() {
     return this.getItems()
@@ -70,7 +70,7 @@ class CartService {
 
   /**
    * カートの全商品を取得します。
-   * @returns {Promise.<Array>} カートの全商品。
+   * @returns {Promise.<Array.<CartItem>>} カートの全商品。
      */
   getItems() {
     const items = this._cart.items;
@@ -82,13 +82,13 @@ class CartService {
 
   /**
    * カートに商品を１つ追加します。
-   * @param id 追加する商品のレコード ID。
+   * @param id {number} 追加する商品のレコード ID。
      */
   addItem(id) {
     const item = this.findRawItem(id);
 
     if (item) {
-      item.number++;
+      item.number += 1;
     } else {
       this._cart.items.push({id: id, number: 1});
     }
@@ -103,8 +103,8 @@ class CartService {
 
   /**
    * セッションに記録されているカートの商品情報を取得します。
-   * @param id 商品のレコード ID。
-   * @returns {*} 商品のレコード ID と個数。
+   * @param id {number} 商品のレコード ID。
+   * @returns {CartItem} カートの商品情報。
    */
   findRawItem(id) {
     return this._cart.items.find(item => item.id === id);

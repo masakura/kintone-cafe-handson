@@ -1,8 +1,11 @@
 const debug = require('debug')('express-prottype:server');
 const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
-const CartService = require('./cartService')
+const CartService = require('./cartService');
 
+/**
+ * kintone API を呼び出すための情報。
+ */
 const kintoneApp = {
   // ex: https://7nkse.cybozu.com/k/v1/
   base: process.env['KINTONE_BASE'],
@@ -17,6 +20,11 @@ class OrdersService {
     this._cartService = new CartService(req);
   }
 
+  /**
+   * 注文を追加します。
+   * @param order {prefecture: string, address: string, fullName, string} 注文情報。
+   * @returns {Promise.<*>}
+     */
   addOrder(order) {
     return this._cartService.getCart()
       // カートの商品を kintone のレコード形式に変換する
@@ -56,6 +64,8 @@ class OrdersService {
       }))
       // kintone API で登録する
       .then(record => {
+        // kintone API の URL を作る。
+        // https://cybozudev.zendesk.com/hc/ja/articles/201941784-%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E6%9B%B4%E6%96%B0-PUT-#step2
         const uri = `${kintoneApp.base}record.json`;
         const json = JSON.stringify(record);
 

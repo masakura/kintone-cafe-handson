@@ -1,4 +1,4 @@
-const debug = require('debug')('express-prottype:server');
+const debug = require('debug')('onlineshop:application');
 const fetch = require('node-fetch');
 const HttpsProxyAgent = require('https-proxy-agent');
 const CartService = require('./cartService');
@@ -82,6 +82,7 @@ class OrdersService {
           }
         })
       })
+      .then(res => {debug(res); return res;})
       // 戻り値を JSON に変換
       .then(res => res.json())
       .then(null, debug);

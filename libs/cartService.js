@@ -1,6 +1,6 @@
 'use strict';
 
-const debug = require('debug')('express-prottype:server');
+const debug = require('debug')('onlineshop:application');
 const ItemsService = require('../libs/itemsService');
 
 /**

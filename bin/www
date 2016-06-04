@@ -7,7 +7,7 @@
  */
 
 const app = require('../app');
-const debug = require('debug')('express-prottype:server');
+const debug = require('debug')('onlineshop:server');
 const http = require('http');
 
 /**

@@ -11,8 +11,18 @@ const kintoneApp = {
 const agent = process.env['https_proxy'] ? new HttpsProxyAgent(process.env['https_proxy']) : null;
 
 const itemsService = {
-  getItems() {
-    return fetch(`${kintoneApp.base}records.json?app=${kintoneApp.id}`, {
+  getItems(ids) {
+    // レコード ID でフィルターを書ける
+    let params = '';
+    if (ids && ids.length) {
+      const query = encodeURIComponent(`$id in (${ids.join(',')})`);
+      params += `&query=${query}`;
+    }
+
+    const uri = `${kintoneApp.base}records.json?app=${kintoneApp.id}${params}`;
+    console.log(uri);
+
+    return fetch(uri, {
       agent,
       headers: {
         'X-Cybozu-API-Token': kintoneApp.token
@@ -30,6 +40,7 @@ const itemsService = {
             summary: row.summary.value
           }));
         items.sort((a, b) => a.id - b.id);
+        console.log(items);
 
         return items;
       });

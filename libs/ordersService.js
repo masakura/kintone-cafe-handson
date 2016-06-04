@@ -15,30 +15,25 @@ const ordersService = {
   addOrder(order) {
     console.log(order.items);
 
-    const promises = order.items
-      .map(item => {
-        return itemsService.getItem(item.id)
-          .then(info => ({
-            value: {
-              code: {
-                value: info.code
-              },
-              name: {
-                value: info.name
-              },
-              unitPrice: {
-                value: info.price
-              },
-              number: {
-                value: item.number
-              }
-            }
-          }));
-      });
-
-    return Promise.all(promises)
-      .then(values => {
-        const data = {
+    return itemsService.getItems(order.items.map(item => item.id))
+      // 受注の注文一覧部分のデータを作成する
+      .then(items => items.map(info => ({
+        value: {
+          code: {
+            value: info.code
+          },
+          name: {
+            value: info.name
+          },
+          unitPrice: {
+            value: info.price
+          },
+          number: {
+            value: 1 // item.number
+          },
+        }})))
+      // 受注データを作成する
+      .then(values => ({
           app: kintoneApp.id,
           record: {
             prefecture: {
@@ -52,11 +47,10 @@ const ordersService = {
             },
             details: {
               value: values
-            }
-          }
-        };
-
-        return fetch(`${kintoneApp.base}record.json`, {
+            },
+          }}))
+      // kintone API で登録する
+      .then(data => fetch(`${kintoneApp.base}record.json`, {
           method: 'POST',
           body: JSON.stringify(data),
           agent,
@@ -64,13 +58,14 @@ const ordersService = {
             'Content-Type': 'application/json',
             'X-Cybozu-API-Token': kintoneApp.token
           }
-        })
-          .then(res => res.json())
-          .then(data => {
-            console.log(data);
-            return data;
-          });
-      });
+        }))
+      // 戻り値を JSON に変換
+      .then(res => res.json())
+      .then(data => {
+        console.log(data);
+        return data;
+      })
+      .catch(console.log);
   }
 };
 

@@ -45,7 +45,7 @@
         "app06-04.md"
     ],
     [
-    "app07.md",
+        "app07.md",
         "app07-01.md",
         "app07-02.md",
         "app07-03.md",
@@ -53,10 +53,43 @@
         "app07-05.md"
     ],
     "app08.md",
-    "app09.md",
-    "app10.md",
-    "app11.md",
-    "app12.md",
+    [
+        "app09.md",
+        "app09-01.md",
+        "app09-02.md",
+        "app09-03.md",
+        "app09-04.md",
+        "app09-05.md",
+        "app09-06.md",
+        "app09-07.md"
+    ],
+    [
+        "app10.md",
+        "app10-01.md",
+        "app10-02.md",
+        "app10-03.md",
+        "app10-04.md",
+        "app10-05.md",
+        "app10-06.md"
+    ],
+    [
+        "app11.md",
+        "app11-01.md",
+        "app11-02.md",
+        "app11-03.md",
+        "app11-04.md",
+        "app11-05.md",
+        "app11-06.md",
+        "app11-07.md",
+        "app11-08.md"
+    ],
+    [
+        "app12.md",
+        "app12-01.md",
+        "app12-02.md",
+        "app12-03.md",
+        "app12-04.md"
+    ],
     "app13.md",
     "app14.md",
     "web00.md",

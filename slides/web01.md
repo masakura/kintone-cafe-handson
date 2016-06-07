@@ -1,6 +1,4 @@
 ### 構成
-* Node.js v6
-* Express (Node.js 用の MVC フレームワーク)
-- プラグインいくつか
+次はここを作ります!
 
-でも、本日は Express のハンズオンではないので初めてでも問題ありません!
+![構成](resources/app-structure-webapp.jpg)

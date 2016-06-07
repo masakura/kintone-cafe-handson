@@ -1,23 +1,4 @@
 ### REST API URL
-
-REST API はこんな感じ
-
-```
-kintone アプリの URL
-https://7nkse.cybozu.com/k/34/
-        ~~~~~              ~~
-        サブドメイン       アプリ ID
-
-アプリのすべてのレコードを取得 (GET)
-https://7nkse.cybozu.com/k/v1/records.json?app=34
-        ~~~~~                                  ~~
-        サブドメイン                           アプリ ID
-
-アプリから ID が 1 のレコードを取得 (GET)
-https://7nkse.cybozu.com/k/v1/record.json?app=34&id=1
-        ~~~~~                                 ~~    ~
-        サブドメイン                   アプリ ID    レコード ID
-
-```
+REST API の仕様は丁寧に公式ドキュメントが丁寧でいい感じ
 
 https://cybozudev.zendesk.com/hc/ja/articles/202331474-%E3%83%AC%E3%82%B3%E3%83%BC%E3%83%89%E3%81%AE%E5%8F%96%E5%BE%97-GET-

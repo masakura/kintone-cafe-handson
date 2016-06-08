@@ -8,7 +8,6 @@ machine:
 dependencies:
   override:
     - docker build -t masakura/shopping:`git rev-parse --short HEAD` .
-    #                 ~~~~~~~~ ここをあなたの Docker ID に書き換える
 
 test:
   override:
@@ -21,4 +20,3 @@ deployment:
     commands:
       - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
       - docker push masakura/prototype1:`git rev-parse --short HEAD`
-      #             ~~~~~~~~ ここをあなたの Docker ID に書き換える

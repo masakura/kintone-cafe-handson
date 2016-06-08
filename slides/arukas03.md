@@ -1,5 +1,8 @@
 ### CircleCI って?
-* CI (継続的デリバリー) のクラウドサービス
-  - https://circleci.com/
-* GitHub と連携し、コミット後にスクリプトが実行できる
-  - スクリプトにビルドスクリプトを書いておけば楽ができる!
+
+![CirlceCI](resources/circleci-logo-stacked-fb.png)
+
+> Ship better code, faster.
+
+> The modern continuous integration and delivery platform
+> that software teams love to use.

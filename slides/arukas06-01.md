@@ -6,5 +6,5 @@
 ```
 dependencies:
   override:
-    - docker build -t masakura/shopping:`git rev-parse --short HEAD` .
+    - docker build -t $DOCKER_USER/shopping:`git rev-parse --short HEAD` .
 ```

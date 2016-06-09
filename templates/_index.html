@@ -35,9 +35,35 @@
         box-shadow: none;
       }
 
-     .reveal .text-small code {
+     .reveal code {
+       display: inline-block;
+       background-color: #ddd;
+       padding-right: 0.1em;
+       padding-left: 0.1em;
+       margin-right: 0.1em;
+       margin-left: 0.1em;
+     }
+
+     .reveal pre code {
+       margin: 0;
+       padding: 5px;
+       border: 0;
+       font-size: 100%;
+       font: inherit;
+       vertical-align: baseline;
+     }
+
+     .reveal pre code.hljs {
+       background: #3f3f3f;
+       color: #dcdcdc;
+       padding: 0.5em;
+       overflow-x: auto;
+     }
+
+     .reveal pre.text-small code {
        font-size: 80%;
      }
+
     </style>
   </head>
   <body>

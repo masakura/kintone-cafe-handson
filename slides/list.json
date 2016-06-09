@@ -17,8 +17,11 @@
         "preparation-11.md"
     ],
     "app00.md",
-    "app01.md",
-    "app02.md",
+    [
+        "app01.md",
+        "app01-01.md",
+        "app01-02.md"
+    ],
     [
         "app03.md",
         "app03-01.md"
@@ -191,10 +194,16 @@
         "web13-02.md",
         "web13-03.md"
     ],
-    "web14.md",
-    "web15.md",
-    "web16.md",
-    "web17.md",
+    [
+        "web14.md",
+        "web14-01.md",
+        "web14-02.md"
+    ],
+    [
+        "web16.md",
+        "web16-01.md",
+        "web16-02.md"
+    ],
     "arukas00.md",
     [
         "arukas01.md",

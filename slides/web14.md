@@ -1,6 +1,1 @@
 ### まとめ
-* kintone API は REST API が使える
-* アプリ設定で API トークンを取得する
-  - `X-Cybozu-API-Token: {token}` をヘッダーに
-  - 詳しくは公式ドキュメントを!
-* JSON データが独特なので加工して扱うのをおすすめ

@@ -1,3 +1,3 @@
-`▶` をクリックしてプロジェクトファイル一覧を開く
+左端の `1: Project` をクリック
 
-![Extend Files](resources/webstorm-extend-project.jpg)
+![Show Project](resources/webstorm-open-project-exec.jpg)

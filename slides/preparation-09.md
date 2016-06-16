@@ -1,3 +1,3 @@
-左端の `1: Project` をクリック
+左下のアイコンをクリック
 
-![Show Project](resources/webstorm-open-project-exec.jpg)
+![Show Toolbar](resources/webstorm-show-toolbar.jpg)
